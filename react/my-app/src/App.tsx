@@ -1,65 +1,60 @@
-import React from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { Socket, io } from 'socket.io-client';
-import "./index.css";
-import Canvas from './Game';
-import { useState } from 'react';
+import React, { useState } from 'react'
+import {
+  useTransition,
+  useSpring,
+  useChain,
+  config,
+  animated,
+  useSpringRef,
+} from '@react-spring/web'
 
-import { Button, View, StyleSheet } from 'react-native';
-
-
-// export default class GridView extends Component {
-
-//   render() {
-//        return (
-//            <View style={styles.container}>
-//              <View style={styles.buttonContainer}>
-//                <Button title="Button 1"/>
-//              </View>
-//              <View style={styles.buttonContainer}>
-//                <Button title="Button 2"/>
-//              </View>
-//            </View>
-//        );
-//    }
-// }
-
-const styles = StyleSheet.create({
-  backgroundVideo: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    bottom: 0,
-    right: 0
-  },
-
-  buttonStyleContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    marginHorizontal: 20,
-    marginTop: 5,
-  }
-});
-// export default VideoPlayer;
-
+import data from './data'
+import styles from './styles.module.css'
+import Canvas from './Game'
 
 export default function App() {
+  const [open, set] = useState(false)
 
-    return (
-      <div className="App">
-    
-    <View style={styles.container}>
-             <View style={styles.buttonContainer}>
-               <Button title="Play"/>
-             </View>
-             <View style={styles.buttonContainer}>
-               <Button title="Watch"/>
-             </View>
-           </View>
-      </div>
+  const springApi = useSpringRef()
+  const { size, ...rest } = useSpring({
+    ref: springApi,
+    config: config.stiff,
+    from: { size: '20%', background: 'hotpink' },
+    to: {
+      size: open ? '100%' : '20%',
+      background: open ? 'white' : 'hotpink',
+    },
+  })
+  const [showCanvas, setShowCanvas] = useState(true);
 
-    );
+  const transApi = useSpringRef()
+  const transition = useTransition(open ? data : [] , {
+    ref: transApi,
+    trail: 400 / data.length,
+    from: { opacity: 0, scale: 0 },
+    enter: { opacity: 1, scale: 1 },
+    leave: { opacity: 0, scale: 0 },
+  })
 
+  // This will orchestrate the two animations above, comment the last arg and it creates a sequence
+  useChain(open ? [springApi, transApi] : [transApi, springApi], [
+    0,
+    open ? 0.1 : 0.6,
+  ])
+
+  return (
+    <div className={styles.wrapper}>
+      <animated.div
+        style={{ ...rest, width: size, height: size }}
+        className={styles.container}
+        onClick={() => set(open => !open)}>
+        {transition((style, item) => (
+          <animated.div
+            className={styles.item}
+            style={{ ...style, background: item.css }}
+          />
+        ))}
+      </animated.div>
+    </div>
+  )
 }
-
-

@@ -1,7 +1,9 @@
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
+// import { useRef, useEffect } from 'react'
 import { Socket, io } from 'socket.io-client';
-import "./Form.css";
+import "./index.css";
+// import { Game } from './Game';
 import Canvas from './Game';
 import { useState } from 'react';
 
@@ -14,7 +16,7 @@ type FormValues = {
 };
 
 
-export default function canvas() {
+export default function _canvas() {
 
 
 
@@ -24,13 +26,12 @@ export default function canvas() {
   const [showTtile, setTtile] = useState(true);
   const [CanvasTitle, setCanvasTitle] = useState(false);
   const [datas, setData] =  useState({Id:"hello", Name:"hello", Email:""});    
-  let T 
   if(window.sessionStorage.getItem("Email")!=null)
   {
 
   return (
 
-    <div  className="_App">
+    <div  className="App">
       { <Canvas data={datas.valueOf()} />}
     </div>
 
@@ -53,7 +54,7 @@ export default function canvas() {
 
   return (
 
-    <div  className="_App">
+    <div  className="App">
       {/* <center> */}
       {showTtile
         && <h1>Ping Pong Player - Registration</h1>
