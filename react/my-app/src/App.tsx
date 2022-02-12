@@ -28,7 +28,17 @@ export default function App() {
   const [CanvasTitle, setCanvasTitle] = useState(false);
   const [datas, setData] =  useState({Id:"hello", Name:"hello", Email:""});    
   let T 
+  if(window.sessionStorage.getItem("Email")!=null)
+  {
+    
+  return (
+    
+    <div  className="App">
+      { <Canvas data={datas.valueOf()} />}
+    </div>
 
+  );
+  }
   //initial WebSocketServer 
   const socket = io('http://localhost:3080');
   
@@ -40,6 +50,7 @@ export default function App() {
     setShowCanvas(true);
     setTtile(false);
     setCanvasTitle(true);
+    window.sessionStorage.setItem("Email",data.email);
     socket.emit('msgToServer', data);
   }
 
