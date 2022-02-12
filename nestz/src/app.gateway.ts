@@ -76,7 +76,7 @@ export class AppGateway implements OnGatewayInit, OnGatewayConnection, OnGateway
   handleMessage(client: Socket, data : { sessionId:string,data:any}): void {
     // this.logger.log(`client sent a message: ${data}`);
     data.sessionId = this.Cls[5];
-    console.log(this.Cls.length);
+    // console.log(this.Cls.length);
     this.wss.emit('msgToClient', data);
   }
 }
