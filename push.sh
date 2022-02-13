@@ -24,7 +24,7 @@ if [[ -z "${message// }" ]]
 fi
 
 # stage all changes
-git add .
+git add . 
 echo "====staged all git files"
 
 # add commit

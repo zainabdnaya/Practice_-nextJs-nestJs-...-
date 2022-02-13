@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react'
 import { Socket, io } from 'socket.io-client';
-import "./_Game.css"
+import "./Game.css"
 
 export class player {
     score: number;
@@ -164,31 +164,30 @@ export class Game {
     ctx: any;
     paddle_right: player;
     paddle_left: player;
-    // game_over: boolean;
-    // winner: string;
     uppress: boolean;
     downpress: boolean;
     center_rec: player;
     uppress1: boolean;
     downpress1: boolean;
     _ball: ball;
-    // x: number;
-    // y: number;
     socket: Socket;
     sender: string;
-    myId : string;
+    myId: string;
     player: number;
-    email : string;
+    email1: string;
+    email2: string;
 
 
-    constructor(canvas: HTMLCanvasElement,date:any) {
+    constructor(canvas: HTMLCanvasElement, date: any) {
         this.canvas = canvas;
         this.ctx = this.canvas.getContext("2d") as CanvasRenderingContext2D;
         this.uppress = false;
         this.downpress = false;
         this.uppress1 = false;
-        this.email = date.Email;
-        console.log(this.email);
+        this.email1 = "";
+        // console.log(this.email1);
+        this.email2 = "";
+        // console.log(this.email2);
         this.downpress1 = false;
         this.paddle_left = new player(0, 10, this.canvas.height / 2, 10, 80, 1, this.ctx, "white");
         this.paddle_right = new player(0, this.canvas.width - 20, (this.canvas.height) / 2, 10, 80, 1, this.ctx, "white");
@@ -197,25 +196,31 @@ export class Game {
         document.addEventListener("keyup", this.keyUpHandler.bind(this), false);
         document.addEventListener("keydown", this.keyDownHandler.bind(this), false);
         this.socket = io("http://localhost:3080");
-       
+
         this.sender = "";
         this.player = 0;
         this.myId = "";
         this.socket.on('msgToClient', (msg) => {
             // if (msg.email  !== undefined) {
-                // this.sender = msg.email;
-                this.sender = msg.sessionId;
-                this.myId = this.socket.id;
-                // console.log(this.myId);
+            // this.sender = msg.email;
+            // this.sender = msg.sessionId;
+            // this.myId = this.socket.id;
+            // console.log(this.myId);
             // }
-            if (msg.paddle_x !== undefined ) {
+            // if (msg.paddle_x !== undefined) {
 
                 this.paddle_left.paddle_x = msg.paddle_x;
                 this.paddle_left.paddle_y = msg.paddle_y;
-            }
+            // }
             // console.log(msg);
         });
-        this.socket.emit('msgToServer', this.paddle_left.ToJson()); // push a mesage to the array
+        // this.socket.emit('msgToServer', this.paddle_left.ToJson()); // push a mesage to the array
+        this.socket.on('UserToClient', (msg) => 
+        {
+            console.log(msg);
+            this.email1 = msg.P1;
+            this.email2 = msg.P2;
+        });
         this.start();
 
     }
@@ -224,8 +229,7 @@ export class Game {
         // console.log(`receive: ${data}`);
     }
 
-    keyDownHandler(e: KeyboardEvent) 
-    {
+    keyDownHandler(e: KeyboardEvent) {
         if (e.key === "ArrowUp" || e.key === "Up") {
             this.uppress = true;
 
@@ -356,11 +360,11 @@ export class Game {
 
 
     start() {
-        if (this.email === "hamzaelkhatri@gmail.com") 
-        {
+        this.socket.emit('UserToServer',"init"); // push a mesage to the array
+        console.log(this.email1 + " " + this.email2);
+        if (this.email1 === window.sessionStorage.getItem("myEmail")) {
             this.keyhook();
         }
-        
         this.draw();
         this._ball.ball_x += this._ball._velocity_x;
         this._ball.ball_y += this._ball._velocity_y;
@@ -374,13 +378,34 @@ export class Game {
 const Canvas = (props: any) => {
     {
         const canvasRef = useRef(null)
-        console.log(props.date)
+        // console.log(props.date)
         useEffect(() => {
-            console.log(props);
-            new Game(canvasRef.current as any,props.data);
+            // console.log(props);
+            new Game(canvasRef.current as any, props.data);
         }, []);
         return <canvas ref={canvasRef}  {...props} width={800} height={400} />
     }
+
+
 }
 
 export default Canvas;
+
+
+
+// type FormValues = {
+
+//     Email: string;
+// }
+
+// const onsubmit
+
+
+
+// <form onSubmit={handleSubmit(onSubmit)} noValidate>
+//     <div>
+//         <label>Whi u want to invite ? (enter their email) </label>
+//         <input {...register("Email_player2")} type="email" />
+//     </div>
+//     <input type="submit" />
+// </form>

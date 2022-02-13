@@ -12,11 +12,13 @@ import { useState } from 'react';
 type FormValues = {
   firstName: string;
   lastName: string;
-  email: string;
+  Email_player1: string;
+  Email_player2: string;
+
 };
 
 
-export default function _Form() {
+export default function App() {
 
 
 
@@ -25,31 +27,21 @@ export default function _Form() {
   const [showForm, setShowForm] = useState(true);
   const [showTtile, setTtile] = useState(true);
   const [CanvasTitle, setCanvasTitle] = useState(false);
-  const [datas, setData] =  useState({Id:"hello", Name:"hello", Email:""});    
-  if(window.sessionStorage.getItem("Email")!=null)
-  {
+  const [datas, setData] =  useState({email1:"",email2:"",Name:""});
+  let T 
 
-  return (
-
-    <div  className="App">
-      { <Canvas data={datas.valueOf()} />}
-    </div>
-
-  );
-  }
   //initial WebSocketServer 
   const socket = io('http://localhost:3080');
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
-    // alert(JSON.stringify(data));
 
-    setData({Id:data.firstName, Name:data.lastName,Email:data.email});
+    setData({email1:data.Email_player1,email2:data.Email_player2,Name:data.firstName});
+    window.sessionStorage.setItem("myEmail",data.Email_player1);
     setShowForm(false);
     setShowCanvas(true);
     setTtile(false);
     setCanvasTitle(true);
-    window.sessionStorage.setItem("Email",data.email);
-    socket.emit('msgToServer', data);
+    socket.emit('UserToServer', data);
   }
 
   return (
@@ -73,10 +65,13 @@ export default function _Form() {
           </div>
 
           <div>
-            <label>Email</label>
-            <input {...register("email")} type="email" />
+            <label>Email_player1</label>
+            <input {...register("Email_player1")} type="email" />
           </div>
-
+          <div>
+            <label>Whi u want to invite ? (enter their email) </label>
+            <input {...register("Email_player2")} type="email" />
+          </div>
           <input type="submit" />
         </form>
       }
@@ -92,28 +87,3 @@ export default function _Form() {
 
   );
 }
-
-/***
- * 
- * 
- * 
- * 
- * 
- * <animated.div
-        style={{ ...rest, width: size, height: size }}
-        className={styles.container}
-        onClick={ OnClick } >
-      {showCanvas && <Canvas data={datas.valueOf()} />}
-      </animated.div>
-      "                                              "
-      <div>
-
-      <p>
-        {/* <button onClick={OnClick}> */
-//      }
-        // </p>
-
-        // </div>
-//  *****/
-
-
