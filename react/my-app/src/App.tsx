@@ -1,60 +1,89 @@
 import React, { useState } from 'react'
 import {
-  useTransition,
   useSpring,
-  useChain,
-  config,
   animated,
   useSpringRef,
 } from '@react-spring/web'
 
-import data from './data'
 import styles from './styles.module.css'
 import Canvas from './Game'
+import _Form from './Form'
 
 export default function App() {
   const [open, set] = useState(false)
 
-  const springApi = useSpringRef()
-  const { size, ...rest } = useSpring({
-    ref: springApi,
-    config: config.stiff,
-    from: { size: '20%', background: 'hotpink' },
+  // const springApi = useSpringRef()
+  const { width, height, ...rest } = useSpring({
+    // ref: springApi,
+    // config: config.stiff,
+    from: {
+      width: 10,
+      height: 10,
+      background: 'yellow',
+      
+    },
     to: {
-      size: open ? '100%' : '20%',
-      background: open ? 'white' : 'hotpink',
+      width: 100,
+      height: 100,
+      background: open ? '#0e101c' : 'yellow',
     },
   })
-  const [showCanvas, setShowCanvas] = useState(true);
+  const [showCanvas, setShowCanvas] = useState(false);
 
-  const transApi = useSpringRef()
-  const transition = useTransition(open ? data : [] , {
-    ref: transApi,
-    trail: 400 / data.length,
-    from: { opacity: 0, scale: 0 },
-    enter: { opacity: 1, scale: 1 },
-    leave: { opacity: 0, scale: 0 },
-  })
+  // const transApi = useSpringRef()
+  // useChain(open ? [springApi, transApi] : [transApi, springApi], [
+  //   open ? 0 : 1,
+  //   open ? 0.1 : 0.6,
+  // ])
 
-  // This will orchestrate the two animations above, comment the last arg and it creates a sequence
-  useChain(open ? [springApi, transApi] : [transApi, springApi], [
-    0,
-    open ? 0.1 : 0.6,
-  ])
+
+  const [datas, setData] = useState({ Id: "hello", Name: "hello", Email: "" });
+
+  const OnClick = () => {
+    set(!open)
+    if (showCanvas === false) {
+      setShowCanvas(true);
+    }
+    else {
+      setShowCanvas(false);
+    }
+  }
+
+  const [showForm, setShowForm] = useState(false);
+
+  const OnClick1 = () => {
+    set(!open)
+    if (showForm === false) {
+      setShowForm(true);
+    }
+    else {
+      setShowForm(false);
+    }
+  }
+  //set an animarted div off
 
   return (
     <div className={styles.wrapper}>
       <animated.div
-        style={{ ...rest, width: size, height: size }}
+        style={{ ...rest, width: width, height: height }}
         className={styles.container}
-        onClick={() => set(open => !open)}>
-        {transition((style, item) => (
-          <animated.div
-            className={styles.item}
-            style={{ ...style, background: item.css }}
-          />
-        ))}
+        onClick={OnClick} >
+        {showCanvas && <Canvas data={datas.valueOf()} />}
+        {/* {setShowCanvas(false)} */}
       </animated.div>
+      if(_in != 1)
+      {
+
+        <animated.div
+          style={{ ...rest, width: width, height: height }}
+          className={styles.container}
+          onClick={OnClick1} >
+          {
+            showForm && <_Form />
+          }
+        </animated.div>
+      }
     </div>
-  )
+
+  );
 }

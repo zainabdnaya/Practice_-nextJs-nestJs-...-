@@ -2,7 +2,7 @@ import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 // import { useRef, useEffect } from 'react'
 import { Socket, io } from 'socket.io-client';
-import "./index.css";
+import "./Form.css";
 // import { Game } from './Game';
 import Canvas from './Game';
 import { useState } from 'react';
@@ -16,7 +16,7 @@ type FormValues = {
 };
 
 
-export default function _canvas() {
+export default function _Form() {
 
 
 
@@ -92,3 +92,28 @@ export default function _canvas() {
 
   );
 }
+
+/***
+ * 
+ * 
+ * 
+ * 
+ * 
+ * <animated.div
+        style={{ ...rest, width: size, height: size }}
+        className={styles.container}
+        onClick={ OnClick } >
+      {showCanvas && <Canvas data={datas.valueOf()} />}
+      </animated.div>
+      "                                              "
+      <div>
+
+      <p>
+        {/* <button onClick={OnClick}> */
+//      }
+        // </p>
+
+        // </div>
+//  *****/
+
+
