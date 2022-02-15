@@ -1,0 +1,43 @@
+html,
+body {
+  background: #121526;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  width: 100vw;
+  height: 100vh;
+  /* background: linear-gradient(180deg, #121526 0%, rgb(44, 39, 59) 100%); */
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.example-container div {
+  /* background: #121526; */
+  background: linear-gradient(180deg, #121526 0%, rgb(72, 61, 98) 100%);
+  border-radius: 10px 10px 10px 10px;
+  width: 150px;
+  height: 150px;
+}
+
+.button {
+  height: 80px;
+  width: 80px;  
+  font-size: 0.5em;
+  border-radius: 50%;
+  background-color: #0c0933;
+  text-align: center;
+  color: white;
+}

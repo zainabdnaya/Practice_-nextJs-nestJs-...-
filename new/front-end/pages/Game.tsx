@@ -1,6 +1,5 @@
 import React, { useRef, useEffect } from 'react'
 import { Socket, io } from 'socket.io-client';
-import "./Game.css"
 
 export class player {
     score: number;
@@ -196,21 +195,33 @@ export class Game {
         document.addEventListener("keyup", this.keyUpHandler.bind(this), false);
         document.addEventListener("keydown", this.keyDownHandler.bind(this), false);
         this.socket = io("http://localhost:3080");
+
         this.sender = "";
         this.player = 0;
         this.myId = "";
         this.socket.on('msgToClient', (msg) => {
-            this.paddle_left.paddle_x = msg.paddle_x;
-            this.paddle_left.paddle_y = msg.paddle_y;
-            this.paddle_right.paddle_x = msg.paddle_x1;
-            this.paddle_right.paddle_y = msg.paddle_y1;
+            // if (msg.email  !== undefined) {
+            // this.sender = msg.email;
+            // this.sender = msg.sessionId;
+            // this.myId = this.socket.id;
+            // console.log(this.myId);
+            // }
+            // if (msg.paddle_x !== undefined) {
+
+                this.paddle_left.paddle_x = msg.paddle_x;
+                this.paddle_left.paddle_y = msg.paddle_y;
+            // }
+            // console.log(msg);
         });
-        this.socket.on('UserToClient', (msg) => {
+        // this.socket.emit('msgToServer', this.paddle_left.ToJson()); // push a mesage to the array
+        this.socket.on('UserToClient', (msg) => 
+        {
             console.log(msg);
             this.email1 = msg.P1;
             this.email2 = msg.P2;
         });
         this.start();
+
     }
 
     receiveMessage(data: any) {
@@ -270,8 +281,6 @@ export class Game {
             if (this.paddle_right._paddle_y < 0) {
                 this.paddle_right.paddle_y = 0;
             }
-            this.socket.emit('msgToServer', this.paddle_right.ToJson()); // push a mesage to the array
-
         }
         if (this.downpress) {
 
@@ -287,7 +296,6 @@ export class Game {
             if (this.paddle_right._paddle_y + this.paddle_right._paddle_height > this.canvas.height) {
                 this.paddle_right.paddle_y = this.canvas.height - this.paddle_right._paddle_height;
             }
-            this.socket.emit('msgToServer', this.paddle_right.ToJson()); // push a mesage to the array
         }
     }
 
@@ -351,7 +359,7 @@ export class Game {
 
 
     start() {
-        this.socket.emit('UserToServer', "init"); // push a mesage to the array
+        this.socket.emit('UserToServer',"init"); // push a mesage to the array
         console.log(this.email1 + " " + this.email2);
         if (this.email1 === window.sessionStorage.getItem("myEmail")) {
             this.keyhook();
@@ -367,18 +375,14 @@ export class Game {
 
 
 const Canvas = (props: any) => {
-    {
         const canvasRef = useRef(null)
         // console.log(props.date)
         useEffect(() => {
             // console.log(props);
             new Game(canvasRef.current as any, props.data);
         }, []);
-        return <canvas ref={canvasRef}  {...props} width={800} height={400} />
-    }
-
-
-}
+        return (<canvas ref={canvasRef}  {...props} width={800} height={400} />);
+};
 
 export default Canvas;
 
