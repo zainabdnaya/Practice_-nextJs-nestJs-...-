@@ -7,8 +7,9 @@ const { Meta } = Card;
 export default function _card() {
 
     return (
-        <Card
-            style={{ width: "30%", padding: "10%", overflow: "hidden", top:"45px", left:"45px" }}
+        <Card id ="custom-card"
+            style={{ width: "13%", left: "50%",  transform: "translate(-200%, -120%)" , position: "absolute"}}
+            
             cover={
                 <img
                     alt="example"
@@ -21,8 +22,8 @@ export default function _card() {
                 <EllipsisOutlined key="ellipsis" />,
             ]}
         >
-            <Meta
-                style={{ overflow: "hidden" }}
+            <Meta id ="custom-card"
+                // style={{ overflow: "hidden" }}
                 avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
                 title="Card title"
                 description="This is the description"
