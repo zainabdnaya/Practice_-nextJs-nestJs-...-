@@ -8,7 +8,7 @@ export default function _card() {
 
     return (
         <Card id ="custom-card"
-            style={{ width: "13%", left: "50%",  transform: "translate(-200%, -120%)" , position: "absolute"}}
+            style={{ width: "14%", left: "50%",  transform: "translate(-200%, -120%)" , position: "absolute"}}
             
             cover={
                 <img
