@@ -21,9 +21,9 @@ function MyApp({ Component, pageProps }: AppProps) {
           <div id="site-layout-background" style={{ padding: 24, minHeight: 380 }}>
             <div id="table">
               <_table />
-              <_card />
             </div>
           </div>
+          <_card />
         </Content>
         <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
       </Layout>

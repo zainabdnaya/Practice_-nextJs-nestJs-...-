@@ -38,7 +38,7 @@ export default function _table() {
     },
     {
       key: '2',
-      name: 'John',
+      name: 'dlklfmf',
       age: 42,
       address: '10 Downing Street',
     },
@@ -53,6 +53,36 @@ export default function _table() {
       name: 'Mike',
       age: 32,
       address: '10 Downing Street',
+    },
+    {
+      key: '1',
+      name: 'Mike',
+      age: 32,
+      address: '10 Downing Street',
+    },
+    {
+      key: '1',
+      name: 'Mike',
+      age: 32,
+      address: '10 Downing Street',
+    },
+    {
+      key: '1',
+      name: 'Mike',
+      age: 32,
+      address: '10 Downing Street',
+    },
+    {
+      key: '1',
+      name: 'Mike',
+      age: 32,
+      address: '10 Downing Street',
+    },
+    {
+      key: '1',
+      name: 'hello',
+      age: 50,
+      address: '10 Downinkdkkkdk ',
     },
   ];
 
@@ -84,6 +114,27 @@ export default function _table() {
         title: 'Name',
         dataIndex: 'name',
         key: 'name',
+      },
+      {
+        title: 'Name',
+        dataIndex: 'name',
+        key: 'name',
+      },
+      {
+        title: 'Name',
+        dataIndex: 'name',
+        key: 'name',
+      },
+      {
+        title: 'Name',
+        dataIndex: 'name',
+        key: 'name',
+      },
+      {
+        title: 'Name',
+        dataIndex: 'name',
+        key: 'name',
+      
       },
     ];
   return (
