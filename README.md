@@ -1,5 +1,7 @@
-# All_in_once
-First try to create full online game website 
+# Practice many  small projects 
+In order to create full online game website with front NestJS and backend with NestJs and PosgresQl database.
+
+
 
 # What is PostgreSQL?
 
